@@ -50,15 +50,15 @@ def main():
     [beep() for _ in range(0,3)]
     sleep_time = 5 * 60
 
-    new_hash = get_hash(registration_url)
+    current_hash = get_hash(registration_url)
     prior_hash = read_hash()  # in case the page has changed since we last ran this program
     if prior_hash is None:
-        prior_hash = new_hash  # first time assume it's still pending
-    while new_hash == prior_hash:
-        print('%s has md5 of %s - sleeping for %d' % (registration_url, new_hash, sleep_time))
+        prior_hash = current_hash  # first time assume it's still pending
+    while current_hash == prior_hash:
+        print('%s has md5 of %s - sleeping for %d' % (registration_url, current_hash, sleep_time))
         time.sleep(sleep_time)
-        prior_hash = new_hash
-        new_hash = get_hash(registration_url)
+        prior_hash = current_hash
+        current_hash = get_hash(registration_url)
 
     print('go now!')
     print(registration_url)
