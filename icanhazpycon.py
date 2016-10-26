@@ -41,7 +41,7 @@ def read_hash():
             s = f.readline().strip()
     except FileNotFoundError:
         s = None
-    print('read_hash : %s' % s)
+    # print('read_hash : %s' % s)
     return s
 
 
