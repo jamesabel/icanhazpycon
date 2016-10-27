@@ -42,7 +42,7 @@ def read_hash():
             s = f.readline().strip()
     except FileNotFoundError:
         s = None
-    print('read_hash : %s' % s)
+    # print('read_hash : %s' % s)
     return s
 
 
@@ -57,13 +57,11 @@ def main():
     current_hash = get_hash(registration_url)
     if prior_hash is None:
         prior_hash = current_hash  # first time assume it's still pending
-    print(prior_hash, current_hash)
     while current_hash == prior_hash:
         print('%s has md5 of %s - sleeping for %d seconds' % (registration_url, current_hash, sleep_time))
         time.sleep(sleep_time)
         prior_hash = current_hash
         current_hash = get_hash(registration_url)
-        print(prior_hash, current_hash)
 
     print('I can haz pycon!  Go now!')
     print(registration_url)
