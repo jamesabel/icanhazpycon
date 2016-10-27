@@ -7,6 +7,7 @@ import binascii
 import requests
 
 registration_url = 'https://us.pycon.org/2017/registration'
+
 hash_file_path = 'hash.txt'
 
 
@@ -24,10 +25,10 @@ def get_hash(url):
     return hash_string
 
 
-def beep():
+def beep(period=0.3):
     sys.stdout.write('\a')
     sys.stdout.flush()
-    time.sleep(0.5)
+    time.sleep(period)
 
 
 def write_hash(hash_string):
@@ -41,29 +42,33 @@ def read_hash():
             s = f.readline().strip()
     except FileNotFoundError:
         s = None
-    # print('read_hash : %s' % s)
+    print('read_hash : %s' % s)
     return s
 
 
 def main():
 
-    [beep() for _ in range(0,3)]
-    sleep_time = 5 * 60
+    # beep so we know we can hear it
+    [beep() for _ in range(0,2)]
 
-    current_hash = get_hash(registration_url)
+    sleep_time = 30 * 60
+
     prior_hash = read_hash()  # in case the page has changed since we last ran this program
+    current_hash = get_hash(registration_url)
     if prior_hash is None:
         prior_hash = current_hash  # first time assume it's still pending
+    print(prior_hash, current_hash)
     while current_hash == prior_hash:
-        print('%s has md5 of %s - sleeping for %d' % (registration_url, current_hash, sleep_time))
+        print('%s has md5 of %s - sleeping for %d seconds' % (registration_url, current_hash, sleep_time))
         time.sleep(sleep_time)
         prior_hash = current_hash
         current_hash = get_hash(registration_url)
+        print(prior_hash, current_hash)
 
-    print('go now!')
+    print('I can haz pycon!  Go now!')
     print(registration_url)
     for _ in range(0,999):
-        beep()
+        beep(0.2)
 
 if __name__ == '__main__':
     main()
