@@ -65,8 +65,9 @@ def main():
 
     print('I can haz pycon!  Go now!')
     print(registration_url)
-    for _ in range(0,999):
-        beep(0.2)
+    while True:
+        # ctrl-C out
+        beep(1)
 
 if __name__ == '__main__':
     main()
